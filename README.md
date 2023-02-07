@@ -1,4 +1,4 @@
-# Task Manager
+# [Task Manager](https://js-express-developer-project-6-production-0366.up.railway.app)
 
 ## Setup
 
@@ -10,7 +10,7 @@ make setup
 
 ```bash
 $ make start
-# Open localhost:5000
+# Open localhost:3000
 ```
 
 
