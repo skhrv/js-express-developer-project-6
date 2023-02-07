@@ -1,2 +1,16 @@
-### Hexlet tests and linter status:
-[![Actions Status](https://github.com/skhrv/js-express-developer-project-6/workflows/hexlet-check/badge.svg)](https://github.com/skhrv/js-express-developer-project-6/actions)
+# Task Manager
+
+## Setup
+
+```bash
+make setup
+```
+
+## Run
+
+```bash
+$ make start
+# Open localhost:5000
+```
+
+
