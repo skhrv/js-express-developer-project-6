@@ -41,7 +41,7 @@
       "@fastify/static": "6.5.0",
       "@fastify/view": "7.1.0",
       "@vscode/sqlite3": "5.0.8",
-      "bootstrap": "5.2.0",
+      "bootstrap": "^5.2.3",
       "fastify": "4.10.2",
       "fastify-cli": "5.1.0",
       "fastify-error-page": "4.0.0",
