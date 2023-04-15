@@ -5,20 +5,21 @@ mixin formFor(entity = null)
   form&attributes(attributes)
     block
 
-mixin input(entity, propertyName, errors = {})
+mixin input(entity, propertyName, label, errors = {})
   - propertyErrors = _.get(errors, propertyName)
   - classLine = 'form-control' + (_.isEmpty(propertyErrors) ? '' : ' is-invalid')
   - inputId = getInputId(propertyName)
-  .mb-3(class=(errors[propertyName] && 'has-danger'))
-    label(
-      for= inputId
-    )= propertyName
+  .form-floating.mb-3(class=(errors[propertyName] && 'has-danger'))
     input(
       id= inputId
       name=getInputName(propertyName)
       class=classLine
+      placeholder=label
       value=_.get(entity, propertyName, '')
     )&attributes(attributes)
+    label(
+      for= inputId
+    )= label
     if !_.isEmpty(propertyErrors)
       .invalid-feedback= propertyErrors.map(({ message }) => message).join('. ')
 
