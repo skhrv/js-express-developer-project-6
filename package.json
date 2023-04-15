@@ -12,7 +12,8 @@
       "build": "webpack",
       "lint": "npx rome check . --apply-suggested",
       "format": "npx rome format . --write",
-      "start": "fastify start server/plugin.js -l debug -P -o"
+      "start": "fastify start server/plugin.js -l debug -P -o",
+      "prepare": "husky install"
    },
    "jest": {
       "modulePathIgnorePatterns": [
@@ -47,6 +48,7 @@
       "fastify-method-override": "1.5.9",
       "fastify-objectionjs": "2.0.0",
       "fastify-reverse-routes": "3.0.0",
+      "husky": "^8.0.3",
       "i18next": "21.9.1",
       "jquery": "3.6.0",
       "knex": "2.4.0",
@@ -59,8 +61,8 @@
       "pino-pretty": "9.0.1",
       "pug": "3.0.2",
       "qs": "6.11.0",
-      "sqlite3": "5.0.11",
-      "webpack": "5.74.0"
+      "sqlite3": "^5.1.6",
+      "webpack": "^5.79.0"
    },
    "devDependencies": {
       "@jest/globals": "28.1.3",
