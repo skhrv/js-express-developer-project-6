@@ -4,16 +4,16 @@ import i18next from "i18next";
 
 export default (app) => {
   app
-    .get("/users", { name: "users" }, async (req, reply) => {
+    .get("/users", { name: "users" }, async (_, res) => {
       const users = await app.objection.models.user.query();
-      reply.render("users/index", { users });
-      return reply;
+      res.render("users/index", { users });
+      return res;
     })
-    .get("/users/new", { name: "newUser" }, (req, reply) => {
+    .get("/users/new", { name: "newUser" }, (_, res) => {
       const user = new app.objection.models.user();
-      reply.render("users/new", { user });
+      res.render("users/new", { user });
     })
-    .post("/users", async (req, reply) => {
+    .post("/users", async (req, res) => {
       const user = new app.objection.models.user();
       user.$set(req.body.data);
 
@@ -21,12 +21,12 @@ export default (app) => {
         const validUser = await app.objection.models.user.fromJson(req.body.data);
         await app.objection.models.user.query().insert(validUser);
         req.flash("info", i18next.t("flash.users.create.success"));
-        reply.redirect(app.reverse("root"));
+        res.redirect(app.reverse("root"));
       } catch ({ data }) {
         req.flash("error", i18next.t("flash.users.create.error"));
-        reply.render("users/new", { user, errors: data });
+        res.render("users/new", { user, errors: data });
       }
 
-      return reply;
+      return res;
     });
 };

@@ -72,8 +72,8 @@ const setupLocalization = async () => {
 };
 
 const addHooks = (app) => {
-  app.addHook("preHandler", async (req, reply) => {
-    reply.locals = {
+  app.addHook("preHandler", async (req, res) => {
+    res.locals = {
       isAuthenticated: () => req.isAuthenticated(),
     };
   });

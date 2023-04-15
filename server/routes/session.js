@@ -4,14 +4,14 @@ import i18next from "i18next";
 
 export default (app) => {
   app
-    .get("/session/new", { name: "newSession" }, (req, reply) => {
+    .get("/session/new", { name: "newSession" }, (_, res) => {
       const signInForm = {};
-      reply.render("session/new", { signInForm });
+      res.render("session/new", { signInForm });
     })
     .post(
       "/session",
       { name: "session" },
-      app.fp.authenticate("form", async (req, reply, err, user) => {
+      app.fp.authenticate("form", async (req, res, err, user) => {
         if (err) {
           return app.httpErrors.internalServerError(err);
         }
@@ -20,18 +20,18 @@ export default (app) => {
           const errors = {
             email: [{ message: i18next.t("flash.session.create.error") }],
           };
-          reply.render("session/new", { signInForm, errors });
-          return reply;
+          res.render("session/new", { signInForm, errors });
+          return res;
         }
         await req.logIn(user);
         req.flash("success", i18next.t("flash.session.create.success"));
-        reply.redirect(app.reverse("root"));
-        return reply;
+        res.redirect(app.reverse("root"));
+        return res;
       }),
     )
-    .delete("/session", (req, reply) => {
+    .delete("/session", (req, res) => {
       req.logOut();
       req.flash("info", i18next.t("flash.session.delete.success"));
-      reply.redirect(app.reverse("root"));
+      res.redirect(app.reverse("root"));
     });
 };
