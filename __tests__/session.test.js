@@ -2,7 +2,7 @@
 
 import fastify from "fastify";
 import init from "../server/plugin.js";
-import { getTestData, prepareData } from "./helpers/index.js";
+import { getTestData, prepareData, truncateAllTables } from "./helpers/index.js";
 
 describe("test session", () => {
   let app;
@@ -12,13 +12,21 @@ describe("test session", () => {
   beforeAll(async () => {
     app = fastify({
       exposeHeadRoutes: false,
-      logger: { target: "pino-pretty" },
+      logger: {
+        transport: {
+          target: "pino-pretty",
+        },
+      },
     });
     await init(app);
     knex = app.objection.knex;
-    await knex.migrate.latest();
-    await prepareData(app);
     testData = getTestData();
+  });
+
+  beforeEach(async () => {
+    await knex.migrate.latest();
+
+    await prepareData(app);
   });
 
   it("test sign in / sign out", async () => {
@@ -55,8 +63,11 @@ describe("test session", () => {
     expect(responseSignOut.statusCode).toBe(302);
   });
 
+  afterEach(async () => {
+    await truncateAllTables(app);
+  });
+
   afterAll(async () => {
-    // await knex.migrate.rollback();
     await app.close();
   });
 });

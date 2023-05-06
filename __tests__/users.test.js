@@ -5,7 +5,7 @@ import fastify from "fastify";
 
 import init from "../server/plugin.js";
 import encrypt from "../server/lib/secure.cjs";
-import { getTestData, prepareData } from "./helpers/index.js";
+import { getTestData, prepareData, truncateAllTables } from "./helpers/index.js";
 
 describe("test users CRUD", () => {
   let app;
@@ -16,21 +16,22 @@ describe("test users CRUD", () => {
   beforeAll(async () => {
     app = fastify({
       exposeHeadRoutes: false,
-      logger: { target: "pino-pretty" },
+      logger: {
+        transport: {
+          target: "pino-pretty",
+        },
+      },
     });
     await init(app);
     knex = app.objection.knex;
     models = app.objection.models;
-
-    // TODO: пока один раз перед тестами
-    // тесты не должны зависеть друг от друга
-    // перед каждым тестом выполняем миграции
-    // и заполняем БД тестовыми данными
-    await knex.migrate.latest();
-    await prepareData(app);
   });
 
-  beforeEach(async () => {});
+  beforeEach(async () => {
+    await knex.migrate.latest();
+
+    await prepareData(app);
+  });
 
   it("index", async () => {
     const response = await app.inject({
@@ -70,9 +71,7 @@ describe("test users CRUD", () => {
   });
 
   afterEach(async () => {
-    // Пока Segmentation fault: 11
-    // после каждого теста откатываем миграции
-    // await knex.migrate.rollback();
+    await truncateAllTables(app);
   });
 
   afterAll(async () => {

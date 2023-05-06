@@ -10,7 +10,7 @@ const migrations = {
 };
 
 export const development = {
-  client: "sqlite3",
+  client: "better-sqlite3",
   connection: {
     filename: path.resolve(__dirname, "database.sqlite"),
   },
@@ -19,7 +19,7 @@ export const development = {
 };
 
 export const test = {
-  client: "sqlite3",
+  client: "better-sqlite3",
   connection: ":memory:",
   useNullAsDefault: true,
   // debug: true,
@@ -29,13 +29,12 @@ export const test = {
 export const production = {
   client: "pg",
   connection: {
-    host : process.env.PGHOST,
-    port : process.env.PGPORT,
-    user : process.env.PGUSER,
-    password : process.env.PGPASSWORD,
-    database : process.env.PGDATABASE,
+    host: process.env.PGHOST,
+    port: process.env.PGPORT,
+    user: process.env.PGUSER,
+    password: process.env.PGPASSWORD,
+    database: process.env.PGDATABASE,
   },
   useNullAsDefault: true,
   migrations,
 };
-

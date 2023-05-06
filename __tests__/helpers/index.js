@@ -18,3 +18,8 @@ export const prepareData = async (app) => {
   // получаем данные из фикстур и заполняем БД
   await knex("users").insert(getFixtureData("users.json"));
 };
+
+/** Вместо rollback используем truncate, т.к при роллбэке возникает ошибка segmentation fault (core dumped) */
+export const truncateAllTables = async (app) => {
+  await app.objection.knex("users").truncate();
+};

@@ -2,6 +2,8 @@
   "users": {
     "new": {
       "email": "malika_hodkiewicz75@live.com",
+      "firstName": "John",
+      "lastName": "Doe",
       "password": "RLJvaIgPOnX5r03"
     },
     "existing": {
