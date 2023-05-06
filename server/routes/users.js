@@ -6,10 +6,9 @@ import { ValidationError } from "objection";
 export default (app) => {
   app
     .get("/users", { name: "users" }, async (_, res) => {
-        const users = await app.objection.models.user.query();
-        res.render("users/index", { users });
-        return res;
-  
+      const users = await app.objection.models.user.query();
+      res.render("users/index", { users });
+      return res;
     })
     .get("/users/new", { name: "newUser" }, (_, res) => {
       const user = new app.objection.models.user();
