@@ -21,12 +21,12 @@ html(lang="en")
           ul.navbar-nav
             if isAuthenticated()
               li.nav-item
-                +buttonTo(route('session'), 'delete')(class="btn nav-link" value=t('layouts.application.signOut'))
+                +buttonTo(route('session'), 'delete')(class="btn nav-link" value=t('layouts.application.logout'))
             else
               li.nav-item
                 a.nav-link(href=route('newSession'))= t('layouts.application.signIn')
               li.nav-item
-                a.nav-link(href=route('newUser'))= t('layouts.application.signUp')
+                a.nav-link(href=route('createUserForm'))= t('layouts.application.signUp')
     .container.wrapper.flex-grow-1
 
       each messages, type in reply.flash() || []

@@ -18,6 +18,16 @@ export default {
           error: "Failed to register",
           success: "User registered successfully",
         },
+        update: {
+          error: "Failed to update",
+          success: "User updated successfully",
+          denied: "Access denied",
+        },
+        delete: {
+          denied: "Access denied",
+          success: "User deleted successfully",
+          error: "Failed to delete",
+        },
       },
       authError: "Access denied! Please login",
     },
@@ -26,7 +36,7 @@ export default {
         users: "Users",
         signIn: "Login",
         signUp: "Register",
-        signOut: "Logout",
+        logout: "Logout",
       },
     },
     views: {
@@ -44,10 +54,17 @@ export default {
         lastName: "Last name",
         password: "Password",
         createdAt: "Created at",
+        actions: "Actions",
         new: {
           submit: "Register",
           signUp: "Register",
         },
+        profile: "Profile",
+        edit: {
+          submit: "Save",
+        },
+        editUser: "Edit",
+        deleteUser: "Delete",
       },
       welcome: {
         index: {

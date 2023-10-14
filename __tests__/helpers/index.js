@@ -23,3 +23,23 @@ export const prepareData = async (app) => {
 export const truncateAllTables = async (app) => {
   await app.objection.knex("users").truncate();
 };
+
+/** Хелпер для создания сессии */
+export const createSession = async (app, user) => {
+  const responseSignIn = await app.inject({
+    method: "POST",
+    url: app.reverse("session"),
+    payload: {
+      data: user,
+    },
+  });
+  expect(responseSignIn.statusCode).toBe(302);
+
+  // после успешной аутентификации получаем куки из ответа,
+  // они понадобятся для выполнения запросов на маршруты требующие
+  // предварительную аутентификацию
+  const [sessionCookie] = responseSignIn.cookies;
+  const { name, value } = sessionCookie;
+  const cookie = { [name]: value };
+  return cookie;
+};

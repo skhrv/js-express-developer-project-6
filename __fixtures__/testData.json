@@ -6,9 +6,13 @@
       "lastName": "Doe",
       "password": "RLJvaIgPOnX5r03"
     },
-    "existing": {
+    "existing1": {
       "email": "lawrence.kulas87@outlook.com",
       "password": "O6AvLIQL1cbzrre"
+    },
+    "existing2": {
+      "email": "nona_murray@yahoo.com",
+      "password": "DJ?8z|pO34g("
     }
   }
 }

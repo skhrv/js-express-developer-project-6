@@ -17,7 +17,6 @@ import fastifyObjectionjs from "fastify-objectionjs";
 import qs from "qs";
 import Pug from "pug";
 import i18next from "i18next";
-
 import ru from "./locales/ru.js";
 import en from "./locales/en.js";
 import addRoutes from "./routes/index.js";
@@ -90,11 +89,16 @@ const registerPlugins = async (app) => {
     },
   });
 
-  fastifyPassport.registerUserDeserializer((user) => app.objection.models.user.query().findById(user.id));
+  fastifyPassport.registerUserDeserializer(async (user) => {
+    const foundUser = await app.objection.models.user.query().findById(user.id);
+
+    return foundUser ?? null;
+  });
   fastifyPassport.registerUserSerializer((user) => Promise.resolve(user));
   fastifyPassport.use(new FormStrategy("form", app));
   await app.register(fastifyPassport.initialize());
   await app.register(fastifyPassport.secureSession());
+
   await app.decorate("fp", fastifyPassport);
   app.decorate("authenticate", (...args) =>
     fastifyPassport.authenticate(
@@ -107,7 +111,12 @@ const registerPlugins = async (app) => {
     )(...args),
   );
 
+  app.decorate("notFound", (_, res) => {
+    res.code(404).type("text/html").send("Not Found");
+  });
+
   await app.register(fastifyMethodOverride);
+
   await app.register(fastifyObjectionjs, {
     knexConfig: knexConfig[mode],
     models,

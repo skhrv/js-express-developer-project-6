@@ -8,6 +8,7 @@ block content
         th= t('views.users.fullName')
         th= t('views.users.email')
         th= t('views.users.createdAt')
+        th= t('views.users.actions')
     tbody
       each user in users
         tr
@@ -15,3 +16,9 @@ block content
           td= user.firstName + ' ' + user.lastName
           td= user.email
           td= formatDate(user.createdAt)
+          td(class='d-flex')
+            a(
+            class='btn btn-primary'
+            href=route('editUser', {id: user.id})
+            )= t('views.users.editUser')
+            +buttonTo(route('deleteUser', {id: user.id}), 'delete')(class="btn btn-danger ms-2" value=t('views.users.deleteUser'))
